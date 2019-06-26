@@ -1,0 +1,33 @@
+Angle winkel = RIGHT;
+	int i = 0;
+	Scan scanner = new Scan(null,null,0,null,0);
+
+	
+	protected void actions() {
+		
+		//scan
+		scanner = getLastScan();
+		if(!scanner.isTargetLocated()) {
+		setScanDirection(winkel);
+		setScanAperture(DOWN.mult(0.5));
+		System.out.println(winkel);
+		if(i == 36) {
+			winkel = RIGHT;
+			i = 0;
+		}
+		Angle wert = DOWN.mult(0.111111111);
+		winkel = winkel.add(wert);
+		i++;
+		}
+		
+		if(scanner.isTargetLocated()) {
+			setScanAperture(DOWN.mult(0.2));
+			Vector v = scanner.estimatedTargetPosition();
+			Angle x = v.getAngle();
+			setLaunchProjectileCommand(x);
+		}
+		setScanDirection(winkel);
+		//scan end
+		
+		
+	}
